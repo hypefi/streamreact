@@ -6,13 +6,19 @@ import  Chatfunc  from "./chat.js";
 import Chakra from "./chakra.js";
 import "./styles.css";
 import Header from './header.js';
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "./home.js"
+import About from "./about.js";
+import Users from "./users.js";
 
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      <Router>
+        <Header />
+        <Main />
+      </Router>
     </div>
   );
 }
@@ -33,19 +39,22 @@ export default App;
 // through the site. This preserves the browser history,
 // work properly.
 
-
+function Main() {
+  return (
+    <main id="main">
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/users" component={Users} />
+      </Switch>
+    </main>
+  );
+}
 
 // You can think of these components as "pages"
 // in your app.
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-         This is Home
-    </div>
-  );
-}
+
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

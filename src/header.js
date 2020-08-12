@@ -1,9 +1,7 @@
 import React from "react";
 import { Box, Heading, Flex, Text, Button } from "@chakra-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Home from "./home.js";
-import About from "./about.js";
-import Users from "./users.js";
+
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -50,24 +48,13 @@ const Header = (props) => {
         alignItems="center"
         flexGrow={1}
       >
-        <Router>
+        
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/users">Users</Link>
           
 
-          <Switch>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
+          
       </Box>
 
       <Box
