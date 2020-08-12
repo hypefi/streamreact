@@ -48,13 +48,10 @@ const Header = (props) => {
         alignItems="center"
         flexGrow={1}
       >
-        
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/users">Users</Link>
-          
-
-          
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/users">Users</Link>
+        <Link to="/products">Products</Link>
       </Box>
 
       <Box

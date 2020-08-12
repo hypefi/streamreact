@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./home.js"
 import About from "./about.js";
 import Users from "./users.js";
+import Products from './products';
 
 
 function App() {
@@ -46,6 +47,7 @@ function Main() {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/users" component={Users} />
+        <Route path="/products" component={Products} />
       </Switch>
     </main>
   );
