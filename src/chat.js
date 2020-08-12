@@ -3,7 +3,7 @@ import React from "react";
 function Chatfunc() {
   return (
     <div>
-      <h2>CHAT</h2>
+      <h2 color='white'> CHAT</h2>
     </div>
   );
 }
