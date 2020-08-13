@@ -1,29 +1,44 @@
 import React from "react";
 import { Box, Image, Badge } from "@chakra-ui/core";
-import { SimpleGrid } from "@chakra-ui/core";
+import { Grid, SimpleGrid } from "@chakra-ui/core";
 
+const divStyle = {
+  padding: "30px"
+};
 
 
 function Products() {
   return (
-    <div>
-      <SimpleGrid minChildWidth="120px" spacing="40px">
-        <Box height="80px">
+    <div style={divStyle}>
+      <SimpleGrid columns={3} spacingX="40px" spacingY="320px">
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
-        <Box height="80px">
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
-        <Box height="80px">
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
-        <Box height="80px">
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
-        <Box height="80px">
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
-        <Box height="80px">
+        <Box height="120px">
+          <AirbnbExample></AirbnbExample>
+        </Box>
+        <Box height="120px">
+          <AirbnbExample></AirbnbExample>
+        </Box>
+        <Box height="120px">
+          <AirbnbExample></AirbnbExample>
+        </Box>
+        <Box height="120px">
+          <AirbnbExample></AirbnbExample>
+        </Box>
+        <Box height="120px">
           <AirbnbExample></AirbnbExample>
         </Box>
       </SimpleGrid>
