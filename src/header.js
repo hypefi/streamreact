@@ -2,6 +2,10 @@ import React from "react";
 import { Box, Heading, Flex, Text, Button } from "@chakra-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+const headerStyle = {
+  'margin-right': "30px",
+};
+
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -47,11 +51,20 @@ const Header = (props) => {
         width={{ sm: "full", md: "auto" }}
         alignItems="center"
         flexGrow={1}
+        style={headerStyle}
       >
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/users">Users</Link>
-        <Link to="/products">Products</Link>
+        <Link style={headerStyle} to="/">
+          Home
+        </Link>
+        <Link style={headerStyle} to="/about">
+          About
+        </Link>
+        <Link style={headerStyle} to="/users">
+          Users
+        </Link>
+        <Link style={headerStyle} to="/products">
+          Products
+        </Link>
       </Box>
 
       <Box
