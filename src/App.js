@@ -1,38 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import './App.css';
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import  Chatfunc  from "./chat.js";
+import Chakra from "./chakra.js";
 import "./styles.css";
-/*
+import Header from './header.js';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "./home.js"
+import About from "./about.js";
+import Users from "./users.js";
+import Products from './products';
+
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Header />
+        <Main />
+      </Router>
     </div>
   );
 }
 
-export default App;*/
+export default App;
 
 
 ////////
@@ -47,62 +39,24 @@ export default App;*/
 // React Router keeps the URL up to date as you navigate
 // through the site. This preserves the browser history,
 // work properly.
-export default function BasicExample() {
-return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Forms">Forms</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
 
-        <hr />
-
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/Forms">
-            <Forms />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+function Main() {
+  return (
+    <main id="main">
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/users" component={Users} />
+        <Route path="/products" component={Products} />
+      </Switch>
+    </main>
   );
 }
 
 // You can think of these components as "pages"
 // in your app.
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
 
-         This is Home 
-
-
-
-    </div>
-  );
-}
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -114,6 +68,14 @@ function Forms() {
                      errors,
                      formState,
                    } = useForm();
+
+                /*     const {
+                       isDirty,
+                       isSubmitting,
+                       touched,
+                       submitCount,
+                     } = formState;*/
+
                    const onSubmit = async (data) => {
                      await sleep(10000);
                      
