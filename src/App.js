@@ -2,8 +2,6 @@ import React from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import  Chatfunc  from "./chat.js";
-import Chakra from "./chakra.js";
 import "./styles.css";
 import Header from './header.js';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
