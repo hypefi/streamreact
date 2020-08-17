@@ -19,11 +19,11 @@ const AddProductForm = (props) => {
     reviewCount: "",
     rating: "",
   };
+
   const [product, setProduct] = useState(initialFormState);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
     setProduct({ ...product, [name]: value });
   };
 
@@ -41,12 +41,17 @@ const AddProductForm = (props) => {
           !product.reviewCount ||
           !product.rating
         )
-          return;
-
-        props.addProduct(product);
-        setProduct(initialFormState);
+          return props.addProduct(product)
+          setProduct(initialFormState)
       }}
     >
+      <FormLabel>imageUrl</FormLabel>
+      <Input
+        type="text"
+        name="imageUrl"
+        value={product.imageUrl}
+        onChange={handleInputChange}
+      />
       <FormLabel>imageAlt</FormLabel>
       <Input
         type="text"
