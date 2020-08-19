@@ -74,13 +74,17 @@ function Products() {
     console.log(products);
   };
 
+  const deleteProduct = (id) => {
+    setProducts(products.filter((product) => product.id !== id));
+  };
+
   return (
     <div style={divStyle}>
       <SimpleGrid columns={3} spacingX="40px" spacingY="320px">
         {products.length > 0 ? (
           products.map((product) => (
             <Box height="120px">
-              <AirbnbExample product={product}></AirbnbExample>
+              <AirbnbExample product={product} deleteProduct={deleteProduct}></AirbnbExample>
             </Box>
           ))
         ) : (
@@ -151,7 +155,12 @@ function AirbnbExample(props){
         </Box>
       </Box>
       <Button className="button muted-button">Edit</Button>
-      <Button className="button muted-button">Delete</Button>
+      <Button
+        onClick={() => props.deleteProduct(property.id)}
+        className="button muted-button"
+      >
+        Delete
+      </Button>
     </Box>
   );
   }
