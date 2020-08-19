@@ -4,6 +4,7 @@ import { SimpleGrid } from "@chakra-ui/core";
 import AddProductForm from "./AddProductForm";
 
 
+
 const divStyle = {
   padding: "30px"
 };
@@ -66,8 +67,11 @@ function Products() {
   const [currentProduct, setCurrentProduct] = React.useState(initialFormState);
 
   const addProduct = (product) => {
+    console.log("addproduct");
     product.id = products.length + 1;
+
     setProducts([...products, product]);
+    console.log(products);
   };
 
   return (
@@ -77,9 +81,6 @@ function Products() {
           products.map((product) => (
             <Box height="120px">
               <AirbnbExample product={product}></AirbnbExample>
-              
-                  
-            
             </Box>
           ))
         ) : (
