@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Box, Image, Badge } from "@chakra-ui/core";
 import { SimpleGrid } from "@chakra-ui/core";
 import AddProductForm from "./AddProductForm";
-
+import EditProductForm from "./EditProductForm";
 
 
 const divStyle = {
   padding: "30px"
 };
-
- 
 
 function Products() {
 
@@ -65,7 +63,9 @@ function Products() {
 //setting state
   const [products, setProducts] = React.useState(productsData);
   const [currentProduct, setCurrentProduct] = React.useState(initialFormState);
+  const [editing, setEditing] = useState(false);
 
+  //crud ops
   const addProduct = (product) => {
     console.log("addproduct");
     product.id = products.length + 1;
@@ -78,13 +78,54 @@ function Products() {
     setProducts(products.filter((product) => product.id !== id));
   };
 
+
+  const updateProduct = (id, updatedProduct) => {
+    setEditing(false);
+    console.log("updated product: ");
+    console.log(updatedProduct);
+    console.log("up product id");
+    console.log(updatedProduct.id);
+    console.log("products");
+    console.log(products);
+    console.log("id" + id);
+    console.log("current product", currentProduct);
+    // should be the id of the item to be edited 
+    setProducts(
+      products.map((product) => (product.id === id ? updatedProduct : product))
+    );
+  };
+
+  const editRow = (product) => {
+    setEditing(true);
+    console.log(editing)
+    console.log("product id", product.id)
+    console.log("product" , product)
+    setCurrentProduct({
+      id: product.id,
+      imageUrl: product.imageUrl,
+      imageAlt: product.imageAlt,
+      beds: product.beds,
+      baths: product.baths,
+      title: product.title,
+      formattedPrice: product.formattedPrice,
+      reviewCount: product.reviewCount,
+      rating: product.rating,
+    });
+  };
+
+  
+  
   return (
     <div style={divStyle}>
       <SimpleGrid columns={3} spacingX="40px" spacingY="320px">
         {products.length > 0 ? (
           products.map((product) => (
             <Box height="120px">
-              <AirbnbExample product={product} deleteProduct={deleteProduct}></AirbnbExample>
+              <AirbnbExample
+                product={product}
+                editRow={editRow}
+                deleteProduct={deleteProduct}
+              ></AirbnbExample>
             </Box>
           ))
         ) : (
@@ -94,7 +135,15 @@ function Products() {
         )}
 
         <Box height="120px">
-          <AddProductForm addProduct={addProduct} />
+          {editing ? (
+              <EditProductForm
+                setEditing={setEditing}
+                currentProduct={currentProduct}
+                updateProduct={updateProduct}
+              />
+          ) : (
+              <AddProductForm addProduct={addProduct} />
+          )}
         </Box>
       </SimpleGrid>
     </div>
@@ -105,7 +154,7 @@ function Products() {
 
 function AirbnbExample(props){
   
-  console.log(props.product);
+  //console.log(props.product);
   const property = props.product;
 
   /*const property = props.product;  */
@@ -154,7 +203,14 @@ function AirbnbExample(props){
           </Box>
         </Box>
       </Box>
-      <Button className="button muted-button">Edit</Button>
+      <Button
+        onClick={() => {
+          props.editRow(property);
+        }}
+        className="button muted-button"
+      >
+        Edit
+      </Button>
       <Button
         onClick={() => props.deleteProduct(property.id)}
         className="button muted-button"
