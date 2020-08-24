@@ -3,6 +3,8 @@ import { Button, Box, Image, Badge } from "@chakra-ui/core";
 import { SimpleGrid } from "@chakra-ui/core";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
+import { db } from './config.js';
+
 
 
 const divStyle = {
@@ -12,6 +14,16 @@ const divStyle = {
 function Products() {
 
   //Data
+
+  db.ref().on("value", function(snapshot) {
+    snapshot.val();
+  console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
+  
+
   const productsData = [
     {
       id: 1,
