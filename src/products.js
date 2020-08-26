@@ -4,6 +4,8 @@ import { SimpleGrid } from "@chakra-ui/core";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
 import { db } from './config.js';
+import { useObject } from "react-firebase-hooks/database";
+
 
 
 
@@ -12,18 +14,8 @@ const divStyle = {
 };
 
 function Products() {
-
   //Data
-
-  db.ref().on("value", function(snapshot) {
-    snapshot.val();
-  console.log(snapshot.val());
-}, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
-});
-
   
-
   const productsData = [
     {
       id: 1,
@@ -38,7 +30,8 @@ function Products() {
     },
     {
       id: 2,
-      imageUrl:"https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80I",
+      imageUrl:
+        "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80I",
       imageAlt: "Pool villa",
       beds: 4,
       baths: 5,
@@ -49,7 +42,8 @@ function Products() {
     },
     {
       id: 3,
-      imageUrl: "https://images.unsplash.com/photo-1565623833408-d77e39b88af6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1565623833408-d77e39b88af6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
       imageAlt: "Penthouse view at night",
       beds: 3,
       baths: 2,
@@ -72,7 +66,7 @@ function Products() {
     rating: "",
   };
 
-//setting state
+  //setting state
   const [products, setProducts] = React.useState(productsData);
   const [currentProduct, setCurrentProduct] = React.useState(initialFormState);
   const [editing, setEditing] = useState(false);
@@ -90,7 +84,6 @@ function Products() {
     setProducts(products.filter((product) => product.id !== id));
   };
 
-
   const updateProduct = (id, updatedProduct) => {
     setEditing(false);
     console.log("updated product: ");
@@ -101,7 +94,7 @@ function Products() {
     console.log(products);
     console.log("id" + id);
     console.log("current product", currentProduct);
-    // should be the id of the item to be edited 
+    // should be the id of the item to be edited
     setProducts(
       products.map((product) => (product.id === id ? updatedProduct : product))
     );
@@ -109,9 +102,9 @@ function Products() {
 
   const editRow = (product) => {
     setEditing(true);
-    console.log(editing)
-    console.log("product id", product.id)
-    console.log("product" , product)
+    console.log(editing);
+    console.log("product id", product.id);
+    console.log("product", product);
     setCurrentProduct({
       id: product.id,
       imageUrl: product.imageUrl,
@@ -125,8 +118,6 @@ function Products() {
     });
   };
 
-  
-  
   return (
     <div style={divStyle}>
       <SimpleGrid columns={3} spacingX="40px" spacingY="320px">
@@ -148,13 +139,13 @@ function Products() {
 
         <Box height="120px">
           {editing ? (
-              <EditProductForm
-                setEditing={setEditing}
-                currentProduct={currentProduct}
-                updateProduct={updateProduct}
-              />
+            <EditProductForm
+              setEditing={setEditing}
+              currentProduct={currentProduct}
+              updateProduct={updateProduct}
+            />
           ) : (
-              <AddProductForm addProduct={addProduct} />
+            <AddProductForm addProduct={addProduct} />
           )}
         </Box>
       </SimpleGrid>
