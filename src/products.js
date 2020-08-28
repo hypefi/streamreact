@@ -36,6 +36,7 @@ function Products() {
     );
   }, []);
 
+  
 
   const initialFormState = {
     id: null,
@@ -57,13 +58,27 @@ function Products() {
   const addProduct = (product) => {
     console.log("addproduct");
     product.id = products.length + 1;
-
+    
     setProducts([...products, product]);
+    // write products in firebase 
+    db.ref(product.id).set({
+      id: product.id,
+      imageUrl: product.imageUrl,
+      imageAlt: product.imageAlt,
+      beds: product.beds,
+      baths: product.baths,
+      title: product.title,
+      formattedPrice: product.formattedPrice,
+      reviewCount: product.reviewCount,
+      rating: product.rating,
+    });
+
     console.log(products);
   };
 
   const deleteProduct = (id) => {
     setProducts(products.filter((product) => product.id !== id));
+    // delete product from firebase 
   };
 
   const updateProduct = (id, updatedProduct) => {
@@ -76,10 +91,10 @@ function Products() {
     console.log(products);
     console.log("id" + id);
     console.log("current product", currentProduct);
-    // should be the id of the item to be edited
     setProducts(
       products.map((product) => (product.id === id ? updatedProduct : product))
     );
+    // update product in firebase 
   };
 
   const editRow = (product) => {
