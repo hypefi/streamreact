@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Box, Image, Badge } from "@chakra-ui/core";
 import { SimpleGrid } from "@chakra-ui/core";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
+import { db } from './config.js';
+
+
 
 
 const divStyle = {
@@ -10,43 +13,30 @@ const divStyle = {
 };
 
 function Products() {
-
   //Data
-  const productsData = [
-    {
-      id: 1,
-      imageUrl: "https://bit.ly/2Z4KKcF",
-      imageAlt: "Rear view of modern home with pool",
-      beds: 3,
-      baths: 2,
-      title: "Modern home in city center in the heart of historic Los Angeles",
-      formattedPrice: "$1,900.00",
-      reviewCount: 34,
-      rating: 4,
-    },
-    {
-      id: 2,
-      imageUrl:"https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80I",
-      imageAlt: "Pool villa",
-      beds: 4,
-      baths: 5,
-      title: "Villa Luigiano near beach",
-      formattedPrice: "$1,100.00",
-      reviewCount: 15,
-      rating: 3,
-    },
-    {
-      id: 3,
-      imageUrl: "https://images.unsplash.com/photo-1565623833408-d77e39b88af6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
-      imageAlt: "Penthouse view at night",
-      beds: 3,
-      baths: 2,
-      title: "Beautiful penthouse",
-      formattedPrice: "$2,000.00",
-      reviewCount: 16,
-      rating: 5,
-    },
-  ];
+
+  const [products, setProducts] = React.useState();
+
+  useEffect(() => {
+    db.ref().on(
+      "value",
+      function (snapshot) {
+        const data = snapshot.val();
+        console.log("data", data);
+        const products = [];
+        for (let id in data) {
+          products.push(data[id]);
+        }
+        console.log("productlist", products);
+        setProducts(products);
+      },
+      function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
+  }, []);
+
+  
 
   const initialFormState = {
     id: null,
@@ -60,8 +50,7 @@ function Products() {
     rating: "",
   };
 
-//setting state
-  const [products, setProducts] = React.useState(productsData);
+  //setting state
   const [currentProduct, setCurrentProduct] = React.useState(initialFormState);
   const [editing, setEditing] = useState(false);
 
@@ -69,15 +58,28 @@ function Products() {
   const addProduct = (product) => {
     console.log("addproduct");
     product.id = products.length + 1;
-
+    
     setProducts([...products, product]);
+    // write products in firebase 
+    db.ref(product.id).set({
+      id: product.id,
+      imageUrl: product.imageUrl,
+      imageAlt: product.imageAlt,
+      beds: product.beds,
+      baths: product.baths,
+      title: product.title,
+      formattedPrice: product.formattedPrice,
+      reviewCount: product.reviewCount,
+      rating: product.rating,
+    });
+
     console.log(products);
   };
 
   const deleteProduct = (id) => {
     setProducts(products.filter((product) => product.id !== id));
+    // delete product from firebase 
   };
-
 
   const updateProduct = (id, updatedProduct) => {
     setEditing(false);
@@ -89,17 +91,17 @@ function Products() {
     console.log(products);
     console.log("id" + id);
     console.log("current product", currentProduct);
-    // should be the id of the item to be edited 
     setProducts(
       products.map((product) => (product.id === id ? updatedProduct : product))
     );
+    // update product in firebase 
   };
 
   const editRow = (product) => {
     setEditing(true);
-    console.log(editing)
-    console.log("product id", product.id)
-    console.log("product" , product)
+    console.log(editing);
+    console.log("product id", product.id);
+    console.log("product", product);
     setCurrentProduct({
       id: product.id,
       imageUrl: product.imageUrl,
@@ -113,12 +115,11 @@ function Products() {
     });
   };
 
-  
-  
   return (
     <div style={divStyle}>
       <SimpleGrid columns={3} spacingX="40px" spacingY="320px">
-        {products.length > 0 ? (
+       
+        {products ? (
           products.map((product) => (
             <Box height="120px">
               <AirbnbExample
@@ -136,13 +137,13 @@ function Products() {
 
         <Box height="120px">
           {editing ? (
-              <EditProductForm
-                setEditing={setEditing}
-                currentProduct={currentProduct}
-                updateProduct={updateProduct}
-              />
+            <EditProductForm
+              setEditing={setEditing}
+              currentProduct={currentProduct}
+              updateProduct={updateProduct}
+            />
           ) : (
-              <AddProductForm addProduct={addProduct} />
+            <AddProductForm addProduct={addProduct} />
           )}
         </Box>
       </SimpleGrid>

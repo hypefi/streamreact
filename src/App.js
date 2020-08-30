@@ -54,8 +54,6 @@ function Main() {
 // You can think of these components as "pages"
 // in your app.
 
-
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Forms() {
@@ -128,3 +126,4 @@ function Dashboard() {
     </div>
   );
 }
+
